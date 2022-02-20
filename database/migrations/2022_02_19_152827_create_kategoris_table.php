@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('parts', function (Blueprint $table) {
+        Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
-            $table->bigInteger('kategori_id')->unsigned();
-            $table->integer('harga');
             $table->timestamps();
-            $table->foreign('kategori_id')->references('id')->on('kategoris');
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parts');
+        Schema::dropIfExists('kategoris');
     }
 };

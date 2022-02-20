@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PartController;
+use App\Http\Controllers\SimulasiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/simulasi')->middleware(['auth']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/simulasi', [SimulasiController::class, 'index'])->middleware(['auth'])->name('simulasi');
+Route::post('/simulasi', [SimulasiController::class, 'submit'])->middleware(['auth']);
+
+Route::get('/admin', [PartController::class, 'index'])->middleware(['auth', 'can:admin'])->name('admin');
+Route::post('/admin', [PartController::class, 'update'])->middleware(['auth', 'can:admin']);
 
 require __DIR__.'/auth.php';
